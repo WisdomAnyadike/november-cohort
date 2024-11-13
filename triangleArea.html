@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <input id="base" type="text">
+    <input id="height" type="text">
+    <button onclick="findArea()"> find Area </button>
+    <p id="ans"> </p>
+
+    <button onclick="handleReset()"> reset </button>
+
+    <input id="val" type="number">
+    <button onclick="increase()"> up </button>
+    <button onclick="decrease()"> dec </button>
+
+    <input type="text" id="season">
+    <button onclick="checkSeason()"> check season</button>
+    <div id="display"> </div>
+
+
+    <input type="text" id="day">
+    <button onclick="checkDay()"> check season</button>
+    <div id="displayDay"> </div>
+</body>
+
+</html>
+<script>
+    let base = document.getElementById('base')
+    let height = document.getElementById('height')
+
+    function findArea() {
+        let area = (0.5 * base.value * height.value)
+        ans.innerHTML = area
+    }
+
+    function handleReset() {
+        base.value = ''
+        height.value = ''
+        ans.innerHTML = ''
+    }
+
+    // number constructor
+    let string = '6547382'
+    string = Number(string)
+    console.log(typeof string, string);
+
+    // using parseInt
+    let string1 = '6547382'
+    string1 = parseInt(string1)
+    console.log(typeof string1, string1);
+
+    // using the +sign
+    let string2 = '6547382'
+    string2 = +(string2)
+    console.log(typeof string2, string2);
+
+    function increase() {
+        let inputValue = Number(document.getElementById('val').value)
+        inputValue = inputValue + 2
+        document.getElementById('val').value = inputValue
+    }
+
+    function decrease() {
+        let inputValue = Number(document.getElementById('val').value)
+        inputValue = inputValue - 2
+        document.getElementById('val').value = inputValue
+    }
+
+
+
+    if (0) {
+        console.log('wowwww');
+    }
+
+
+    function checkSeason() {
+        // winter summer autumn spring
+        let season = document.getElementById('season').value
+        if (season === 'winter') {
+            display.innerHTML = `<p> this is winter </p>`
+        } else if (season === 'summer') {
+            display.innerHTML = `<p> this is summer</p>`
+
+        } else if (season === 'autumn') {
+            display.innerHTML = `<p> this is autumn</p>`
+
+        } else if (season === 'spring') {
+            display.innerHTML = `<p> this is spring</p>`
+
+        } else {
+            display.innerHTML = `<p> Invalid Input</p>`
+
+        }
+    }
+
+
+    function checkDay(params) {
+        let key = document.getElementById('day').value
+        switch (key) {
+            case 'monday':
+                console.log('this is monday');
+                break;
+            case 'tuesday':
+                console.log('this is tuesday');
+                break;
+            default:
+                console.log('invalid day');
+                break;
+        }
+    }
+
+
+
+</script>
