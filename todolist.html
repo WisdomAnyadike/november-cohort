@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text" id="input"> <button onclick="addTodo()"> add </button>
+    <div id="preview">
+
+
+    </div>
+</body>
+
+</html>
+<script>
+    let database = []
+    function addTodo(params) {
+        if (input.value.trim() === '') {
+            alert('add a value')
+        } else {
+            database.push(input.value.trim())
+            console.log(database);
+            preview.innerHTML = ''
+            for (let index = 0; index < database.length; index++) {
+                preview.innerHTML += `<p>${database[index]} <button onclick="edit()"> edit </button> <button> delete </button>  </p>`
+            }
+
+            // for (const todo of database) {
+            //     preview.innerHTML += `<p> ${todo}  </p>`
+            // }
+
+
+        }
+    }
+
+
+
+
+</script>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <input id="input1" type="number">
+    <input id="input2" type="number">
+    <button id="button"> start </button>
+    <div id="preview">
+
+
+    </div>
+
+</body>
+
+</html>
+<script>
+
+    button.addEventListener('click', displayTimeTables)
+
+    function displayTimeTables(params) {
+        let input1 = +(document.getElementById('input1').value)
+        let input2 = +(document.getElementById('input2').value)
+
+        if (input1 === '' || input2 === '') {
+            alert('all fields are mandatory')
+        } else if (input1 < input2) {
+            preview.innerHTML = ''
+            for (let index = input1; index <= input2; index++) {
+                preview.innerHTML += `<h1> multiplication table for ${index} </h1>`
+                for (let i = 0; i < 13; i++) {
+                    preview.innerHTML += `<p> ${index} * ${i} = ${index * i} </p>`
+
+                }
+
+                preview.innerHTML += `<br>`
+            }
+
+
+        } else {
+            preview.innerHTML = ''
+            for (let index = input1; index >= input2; index--) {
+                preview.innerHTML += `<h1> multiplication table for ${index} </h1>`
+                for (let i = 0; i < 13; i++) {
+                    preview.innerHTML += `<p> ${index} * ${i} = ${index * i} </p>`
+
+                }
+
+                preview.innerHTML += `<br>`
+            }
+
+        }
+    }
+
+
+
+    let arr = [1, 2, 3, 4, 5]
+
+    let sum = 0
+    for (const b of arr) {
+        sum = sum + b
+    }
+
+
+    for (let i = 0; i <= 5; i++) {
+        if (i == 3) {
+            break
+        }else {
+           
+            continue
+            console.log(i)
+        }
+        
+    }
+
+// 0 1 2 4 5
+</script>

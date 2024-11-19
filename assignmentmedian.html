@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+    const ages = [19, 22, 19, 24, 20]
+
+    ages.sort()
+    console.log(ages);
+    let minAge = ages[0]
+    let maxAge = ages[ages.length - 1]
+
+    console.log(minAge);
+    console.log(maxAge);
+
+
+    let median
+    if (ages.length % 2 === 0) {
+        let firstIndex = (ages.length / 2) - 1
+        let secondIndex = ages.length / 2
+
+        median = (ages[firstIndex] + ages[secondIndex]) / 2
+    } else {
+        let index = Math.floor(ages.length / 2)
+        median = ages[index]
+    }
+
+    console.log(median);
+
+
+    let sumOfValuesInArr = 0
+    for (let index = 0; index < ages.length; index++) {
+        sumOfValuesInArr = sumOfValuesInArr + ages[index]
+    }
+    console.log(sumOfValuesInArr);
+
+    let average = sumOfValuesInArr / ages.length
+    console.log(average);
+
+
+    let range = maxAge - minAge
+    console.log(range);
+
+    let answer = Math.abs((minAge - average) - (maxAge - average))
+    console.log(answer);
+
+
+    for (let i = 10; i > 2; i--) {
+        console.log(i);
+        console.log('wow');
+        console.log('davido');
+    }
+
+    console.log('hello');
+
+
+    for (let index = 12; index >= 0; index--) {
+        console.log(`2 * ${index} =${2 * index} `)
+
+    }
+
+    let myArr = [1]
+    myArr.unshift(2)
+    myArr.shift()
+    console.log(myArr);
+
+
+
+    let i = 6
+    do {
+        console.log(i)
+        i++
+    } while (i <= 5)
+
+// 0 1 2 3 4 5
+</script>
