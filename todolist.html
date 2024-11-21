@@ -18,16 +18,14 @@
 </html>
 <script>
     let database = []
+    
     function addTodo(params) {
         if (input.value.trim() === '') {
             alert('add a value')
         } else {
             database.push(input.value.trim())
             console.log(database);
-            preview.innerHTML = ''
-            for (let index = 0; index < database.length; index++) {
-                preview.innerHTML += `<p>${database[index]} <button onclick="edit()"> edit </button> <button> delete </button>  </p>`
-            }
+            display()
 
             // for (const todo of database) {
             //     preview.innerHTML += `<p> ${todo}  </p>`
@@ -38,6 +36,26 @@
     }
 
 
+    function edit(lol) {
+        let ourPrompt = prompt('Enter new todo here', database[lol])
+        console.log(ourPrompt);
+        if (ourPrompt === null || ourPrompt.trim() === '' || ourPrompt === database[lol]) {
+            alert('enter a value please')
+        } else {
+            database.splice(lol, 1, ourPrompt)
+            console.log(database);
+            display()
+        }
 
+
+    }
+
+
+    function display() {
+        preview.innerHTML = ''
+        for (let index = 0; index < database.length; index++) {
+            preview.innerHTML += `<p>${database[index]} <button onclick="edit(${index})"> edit </button> <button> delete </button>  </p>`
+        }
+    }
 
 </script>

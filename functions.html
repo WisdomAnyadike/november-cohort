@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- <button onclick="calNumbers(20 , 100 , '+')"> click </button>
+    <button onclick=" calNumbers(10 , 5 , '-')"> click </button>
+    <button onclick="  calNumbers(203, 342 , '/')"> click </button> -->
+
+    <input id="one" type="text">
+    <input id="two" type="text">
+    <button onclick="add()"> calculate </button>
+    <p id="ptag"> </p>
+
+</body>
+
+</html>
+<script>
+
+    // var name = undefined
+    console.log(myValue);
+
+    var myValue = 'tolu'
+    console.log(myValue);
+
+    function jump(params) {
+        console.log(myName);
+        var myName = 'hello'
+        console.log(myName);
+    }
+
+    jump()
+
+
+
+
+    if (true) {
+        let biscuit = 'cabin'
+        console.log(biscuit);
+    }
+
+
+
+
+    function wow() {
+        let hello = 'greeting'
+
+        return function run() {
+            let hi = 'greeting 2'
+
+            return function sing() {
+                let hey = 'greeting 3'
+                console.log(hello);
+                console.log(hi);
+                console.log(hey);
+            }
+
+        }
+
+    }
+
+    wow()()()
+
+
+    sayWow()
+
+    //function declaration 
+    function sayWow(params) {
+        console.log('wowwwwww');
+    }
+
+    // function jumping(){
+
+    // }
+
+    // let mine = function (params) {
+
+    // }
+
+    // mine()
+
+    //function expression
+    let generate = function (params) {
+        console.log('hmmmm');
+    }
+
+
+
+
+        //IIFE
+        (function mine(params) {
+            console.log('mineeee');
+        }())
+
+
+    let myFunc = () => {
+
+    }
+
+
+    function calNumbers(num1 = 2, num2 = 25, operation) {
+        if (operation === '+') {
+            return (num1 + num2)
+        } else if (operation === '-') {
+            return (num1 - num2)
+        } else {
+            return (num1 / num2)
+        }
+
+    }
+
+
+
+    calNumbers(20, 100, '+')
+    calNumbers(10, 5, '-')
+    calNumbers(203, 342, '/')
+
+
+    function doAddition() {
+        if (!one.value.trim() || !two.value.trim()) {
+            return 'add a value'
+        }
+
+        return (Number(one.value) + Number(two.value))
+    }
+
+    function add() {
+        ptag.innerHTML = doAddition()
+    }
+
+
+    function muliplyby2(val) {
+        let myVal = val * 2
+        return function add200() {
+            myVal = myVal + 200
+            return function minus500() {
+                return myVal - 500
+            }
+        }
+
+    }
+
+    console.log(muliplyby2(200)()());
+
+
+    function hexaDecimal() {
+        let arr = [0,1, 2, 3, 4, 5, 6, 7, 8, 9, 'a', 'b', 'c', 'd', 'e']
+        let hexa = '#'
+        
+
+        for (let index = 0; index < 6; index++) {
+            let picker = Math.floor(Math.random() * arr.length)//0-14 
+            hexa = hexa + arr[picker]
+        }
+
+        return hexa
+
+    }
+
+    document.body.style.backgroundColor = hexaDecimal()
+
+
+    
+   
+
+
+</script>
