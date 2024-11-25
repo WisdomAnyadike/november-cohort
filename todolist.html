@@ -18,7 +18,7 @@
 </html>
 <script>
     let database = []
-    
+
     function addTodo(params) {
         if (input.value.trim() === '') {
             alert('add a value')
@@ -54,7 +54,18 @@
     function display() {
         preview.innerHTML = ''
         for (let index = 0; index < database.length; index++) {
-            preview.innerHTML += `<p>${database[index]} <button onclick="edit(${index})"> edit </button> <button> delete </button>  </p>`
+            preview.innerHTML += `<p>${database[index]} <button onclick="edit(${index})"> edit </button> <button onclick="deleteTodo(${index})"> delete </button>  </p>`
+        }
+    }
+
+
+    function deleteTodo(lol) {
+        let confirmer = confirm('are you sure you want to delete?')
+        if (confirmer){
+            database.splice(lol, 1)
+            display()
+        }else{
+            
         }
     }
 

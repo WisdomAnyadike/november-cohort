@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <input type="text" id="run">
+
+</body>
+
+</html>
+<script>
+    let myObj = new Object()
+    let newObj = {
+        name: 'duroshola',
+        school: 'SQI',
+        course: 'fullstack development',
+        studentId: 230899,
+        maritalStatus: undefined,
+        age: 20,
+        education: { primary: ['staff school', 'isi'], secondary: ['concord'], tertiary: 'UI' },
+        sayName: function () {
+            return `my name is ${this.name}`
+        }
+
+    }
+    console.log(newObj.sayName());
+    newObj.education = 'finished my Bsc'
+
+    let newObjCopy = Object.assign({}, newObj)
+    console.log(newObjCopy);
+    newObjCopy.age = 40
+
+
+    console.log(Object.keys(newObjCopy));
+    console.log(Object.values(newObjCopy));
+    console.log(Object.entries(newObjCopy));
+    console.log(newObjCopy.hasOwnProperty('name '));
+
+
+    console.log(newObj.school);
+    console.log(newObj['school']);
+
+    // console.log(newObj.education.tertiary);
+    // console.log(newObj.education.primary[1]);
+
+
+    // console.log(myObj);
+    // console.log(newObj);
+
+
+    document.body.innerHTML = `
+
+    <p> <span> name </span> : ${newObj.name}</p>
+    <p> <span> class </span> : ${newObj.course} </p>
+    <p> <img src="" alt="" ></p>
+    
+    
+    
+    `
+
+
+
+    for (const key in newObj) {
+        console.log(` ${key} : ${newObj[key]}`);
+    }
+
+    let obj = {
+        run: run.value ,
+        name: input2.value 
+    }
+
+
+
+</script>
