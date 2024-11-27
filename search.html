@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="search" id="input" oninput="search()">
+    <div id="showProducts">
+
+
+
+    </div>
+
+</body>
+
+</html>
+<script>
+    let input = document.getElementById('input')
+    let myProducts = ['nike', 'addidas', 'lv', 'fendi', 'prada']
+
+    function displayProducts() {
+        showProducts.innerHTML = ''
+        myProducts.forEach((product, index, arr) => {
+            showProducts.innerHTML += `<p> ${product} </p>`
+        })
+    }
+
+    displayProducts()
+
+    function search() {
+        let searchedProducts = myProducts.filter((product, index, arr) => {
+            return product.includes(input.value.toLowerCase().trim())
+        })
+        
+        if (searchedProducts.length > 0) {
+            showProducts.innerHTML = ''
+            searchedProducts.forEach((product, index, arr) => {
+                showProducts.innerHTML += `<p> ${product} </p>`
+            })
+        } else {
+            showProducts.innerHTML = `<p> product does not exist </p>`
+        }
+    }
+
+
+
+
+
+    // let input = document.getElementById('input')
+    // let myProducts = ['nike', 'addidas', 'lv', 'fendi', 'prada']
+
+    // function displayProducts(myArr) {
+    //     showProducts.innerHTML = ''
+    //     myArr.forEach((product, index, arr) => {
+    //         showProducts.innerHTML += `<p> ${product} </p>`
+    //     })
+    // }
+
+    // displayProducts(myProducts)
+
+    // function search() {
+    //     let searchedProducts = myProducts.filter((product, index, arr) => {
+    //         return product.includes(input.value.toLowerCase().trim())
+    //     })
+
+    //     if (searchedProducts.length > 0) {
+    //         displayProducts(searchedProducts)
+    //     } else {
+    //         showProducts.innerHTML = `<p> product does not exist </p>`
+    //     }
+    // }
+</script>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+    //forEach map every some find findIndex filter reduce
+
+    let numsArr = [1, 2, 2, 3, 4, 5, 6]
+
+    console.log(numsArr.forEach((num, i, esdrtyuikol) => {
+
+        // esdrtyuikol.forEach(()=> {
+        //      console.log(num);
+        // })
+
+
+    }));
+
+
+    // console.log(numsArr.map((num, i, arr) => {
+    //     console.log(num, i, arr);
+    //     return
+    // }));
+
+
+    console.log(numsArr.every((n, i, arr) => {
+
+        console.log(n, i, arr);
+        return typeof n === "number"
+
+    }));
+
+
+    console.log(numsArr.some((n, i, arr) => {
+        console.log(n, i, arr);
+        // return typeof n === "boolean"
+
+
+
+    }));
+
+
+    let arr2 = [{ name: 'daniel', class: 'jss3' }, { name: 'shola', class: " ss2" }, { name: "tolu", class: "ss3" }]
+
+    console.log(arr2.find((obj, i, arr) => {
+        console.log(obj, i, arr);
+        return obj.name === 'tolu' && obj.class === 'jss2'
+
+    }));
+
+
+    let findNum2 = numsArr.findIndex((num, i, arr) => {
+        console.log(num, i, arr);
+
+        return num === 2
+    })
+
+    console.log(findNum2);
+
+
+    let filteredArr = numsArr.filter((num, i, arr) => {
+        console.log(num, i, arr);
+        return typeof num === "boolean"
+    })
+
+    console.log(filteredArr);
+
+
+    let sum = numsArr.reduce((acc, cumulator) =>   acc * cumulator, 1)
+
+    console.log(sum);
+
+
+</script>
