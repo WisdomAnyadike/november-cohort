@@ -40,6 +40,9 @@
     <p id="pin"> </p>
     <button onclick="generate()"> Generate Pin </button>
 
+    <input oninput="checkInput()" type="text" id="input">
+    <button onclick="loadRechargeCard()"> Load Card</button>
+
 
     <table>
 
@@ -70,24 +73,16 @@
     </table>
 
 
+
 </body>
 
 </html>
 <script>
-    let cardDatabase = []
-
-
-
+    let cardDatabase = JSON.parse(localStorage.getItem('cards')) || []
 
     // localStorage.setItem('studentObj', JSON.stringify({ name: 'daniel', class: "ss2" }))
-
-
     // let myObj = JSON.parse(localStorage.getItem('studentObj'))
-
-
-
     // console.log(myObj);
-
     // localStorage.removeItem('studentObj')
 
 
@@ -95,8 +90,6 @@
         if (!Provider.value || !Amount.value) {
             alert('all fields are mandatory')
         } else {
-            // pin.innerHTML = ` ${Math.floor(Math.random() * (10 ** 12))} , ${(Math.floor(Math.random() * (10 ** 12))).toString().length}`
-
             let myPin = ''
             for (let index = 0; index < 12; index++) {
                 let randomNum = Math.floor(Math.random() * 10)
@@ -112,20 +105,68 @@
                 used: false
             }
             cardDatabase.push(pinObj)
+            localStorage.setItem('cards', JSON.stringify(cardDatabase))
             console.log(cardDatabase);
+            display()
         }
 
     }
 
-    function display(params) {
-        tbody.innerHTML = ` <td>
-                <tr> </tr>
-                <tr> </tr>
-                <tr> </tr>
-                <tr> </tr>
-            </td>`
+
+    function display() {
+        tbody.innerHTML = ""
+        cardDatabase.forEach((val, index) => {
+            tbody.innerHTML += ` <tr>
+                 <td>${index + 1}</td>
+                 <td>${val.provider}</td>
+                 <td>${val.amount}</td>
+                 <td>${val.used}</td>
+                 <td>${val.pin}</td>
+                </tr>`
+        })
+    }
+
+    display()
+
+
+    function loadRechargeCard() {
+        let card = document.getElementById('input').value.trim()
+        console.log(card);
+
+        let thePin = card.slice(5, 17)
+        console.log(thePin);
+
+
+        let foundCard = cardDatabase.find((cardObj, index, arr) => { return cardObj.pin === thePin })
+        console.log(foundCard);
+
+        if (card === '') {
+            alert('all fields are mandatory')
+        } else if (!foundCard) {
+            alert('pin does not exist')
+        }
+        else if (!card.startsWith('*311*') || !card.endsWith('#')) {
+            alert('invalid card format')
+        }
+        else if (foundCard.used === true) {
+            alert('this card has already been used')
+        }
+        else {
+            alert(`you have successfully recharged N${foundCard.amount} ${foundCard.provider}`)
+            foundCard.used = true
+            localStorage.setItem('cards', JSON.stringify(cardDatabase))
+            display()
+        }
+
 
     }
 
+    function checkInput() {
+        let mycard = document.getElementById('input').value.trim()
+
+        if (mycard.length > 17) {
+            document.getElementById('input').value = mycard.slice(0, 18)
+        }
+    }
 
 </script>
