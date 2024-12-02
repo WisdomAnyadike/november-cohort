@@ -43,6 +43,15 @@
     <input oninput="checkInput()" type="text" id="input">
     <button onclick="loadRechargeCard()"> Load Card</button>
 
+    <p> mtn : N<span id="MtnBal"> </span> </p>
+    <p> airtel : N<span id="AirtelBal"> </span> </p>
+    <p> glo : N<span id="GloBal"> </span> </p>
+    <p> 9mobile : N<span id="Mobile9Bal"> </span> </p>
+
+
+    <button> All cards </button>     <button> Used cards </button>     <button> UnUsed cards </button>
+
+    <p style="margin-top: 20px;"></p>
 
     <table>
 
@@ -79,6 +88,10 @@
 </html>
 <script>
     let cardDatabase = JSON.parse(localStorage.getItem('cards')) || []
+    let mtnBal = Number(localStorage.getItem('mtnBal')) || 0
+    let airtelBal = localStorage.getItem('airtelBal') || 0
+    let mobile9Bal = localStorage.getItem('mobile9Bal') || 0
+    let gloBal = localStorage.getItem('gloBal') || 0
 
     // localStorage.setItem('studentObj', JSON.stringify({ name: 'daniel', class: "ss2" }))
     // let myObj = JSON.parse(localStorage.getItem('studentObj'))
@@ -154,6 +167,7 @@
         else {
             alert(`you have successfully recharged N${foundCard.amount} ${foundCard.provider}`)
             foundCard.used = true
+            addBalance(foundCard.amount, foundCard.provider)
             localStorage.setItem('cards', JSON.stringify(cardDatabase))
             display()
         }
@@ -168,5 +182,38 @@
             document.getElementById('input').value = mycard.slice(0, 18)
         }
     }
+
+
+    function addBalance(bal, provider) {
+        if (provider === 'MTN') {
+            mtnBal += Number(bal)
+            localStorage.setItem('mtnBal', mtnBal)
+        } else if (provider === 'AIRTEL') {
+            airtelBal += Number(bal)
+            localStorage.setItem('airtelBal', airtelBal)
+        } else if (provider === 'GLO') {
+            gloBal += Number(bal)
+            localStorage.setItem('gloBal', gloBal)
+        } else {
+            mobile9Bal += Number(bal)
+            localStorage.setItem('mobile9Bal', mobile9Bal)
+        }
+
+        displayBal()
+
+    }
+
+
+    function displayBal() {
+        MtnBal.innerHTML = mtnBal
+        AirtelBal.innerHTML = airtelBal
+        Mobile9Bal.innerHTML = mobile9Bal
+        GloBal.innerHTML = gloBal
+    }
+
+    displayBal()
+
+
+
 
 </script>
