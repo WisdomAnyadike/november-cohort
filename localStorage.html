@@ -49,7 +49,8 @@
     <p> 9mobile : N<span id="Mobile9Bal"> </span> </p>
 
 
-    <button> All cards </button>     <button> Used cards </button>     <button> UnUsed cards </button>
+    <button onclick="display(cardDatabase)"> All cards </button> <button onclick="display(usedCards)"> Used cards
+    </button> <button onclick="display(unusedCards)"> UnUsed cards </button>
 
     <p style="margin-top: 20px;"></p>
 
@@ -126,9 +127,9 @@
     }
 
 
-    function display() {
+    function display(arr) {
         tbody.innerHTML = ""
-        cardDatabase.forEach((val, index) => {
+        arr.forEach((val, index) => {
             tbody.innerHTML += ` <tr>
                  <td>${index + 1}</td>
                  <td>${val.provider}</td>
@@ -139,7 +140,10 @@
         })
     }
 
-    display()
+    display(cardDatabase)
+
+    let usedCards = cardDatabase.filter((card) => card.used === true)
+    let unusedCards = cardDatabase.filter((arr) => arr.used === false)
 
 
     function loadRechargeCard() {
