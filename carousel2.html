@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+    let carouselDatabase = JSON.parse(localStorage.getItem('carousel')) || []
+    let index = 0
+    function displayCarousel() {
+        document.body.innerHTML = ` <input type="file" id="image" onchange="swipe()">
+    <img width="400px" height="400px" src="${carouselDatabase[index]}" alt="" id="img"> 
+    <div>
+        <button  onclick="prev()" >prev</button>
+        <button  onclick="next()" >next</button>
+        <button  onclick="reset()" > reset</button>
+    </div>`
+
+        carouselDatabase.length > 0 ? img.style.display = "block" : img.style.display = "none"
+
+
+    }
+
+    displayCarousel()
+
+
+    function swipe() {
+        let file = document.getElementById('image').files[0]
+        let reader = new FileReader()
+        if (file) {
+            reader.readAsDataURL(file)
+
+        }
+        reader.addEventListener('load', function (e) {
+            let url = e.target.result
+            console.log(url);
+            if (carouselDatabase.length < 6) {
+                carouselDatabase.push(url)
+                localStorage.setItem('carousel', JSON.stringify(carouselDatabase))
+                displayCarousel()
+            } else {
+                alert('Pics cannot exceed 5')
+            }
+
+
+        })
+
+
+        console.log(file);
+
+    }
+
+    function prev() {
+        if (index === 0) {
+            index = carouselDatabase.length - 1
+        } else {
+            index--
+        }
+        displayCarousel()
+    }
+
+    function next() {
+        if (index === carouselDatabase.length - 1) {
+            index = 0
+        } else {
+            index++
+        }
+        displayCarousel()
+    }
+
+    function reset(params) {
+        // carouselDatabase.splice(0, carouselDatabase.length)
+        // localStorage.setItem('carousel', JSON.stringify(carouselDatabase))
+        localStorage.removeItem('carousel')
+        carouselDatabase = JSON.parse(localStorage.getItem('carousel')) || []
+        displayCarousel()
+    }
+</script>
