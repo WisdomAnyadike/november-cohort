@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div>
+        <label for="username"> username </label>
+        <input type="text" id="username">
+    </div>
+    <div>
+        <label for="email"> email </label>
+        <input type="text" id="email">
+    </div>
+    <div>
+        <label for="password"> password </label>
+        <input type="text" id="password">
+    </div>
+    <div>
+        <label for="confirmpassword"> confirm password </label>
+        <input type="text" id="confirmpassword">
+    </div>
+
+    <div>
+        <label for="terms"> agree to terms and conditions </label>
+        <input type="checkbox" id="terms">
+    </div>
+
+    <button id="button" onclick="signup()"> Sign up</button>
+
+</body>
+
+</html>
+<script>
+
+    let usersData = JSON.parse(localStorage.getItem('userInfo')) || []
+
+    // terms.checked = true
+
+    function signup() {
+        button.innerHTML = 'loading...'
+        button.disabled = true
+
+        setTimeout(() => {
+            
+            if (!username.value.trim() || !email.value.trim() || !password.value.trim() || !confirmpassword.value.trim()) {
+                alert('all fields are mandatory')
+            } else if (password.value.trim() !== confirmpassword.value.trim()) {
+                alert('password does not match')
+            } else if (!(password.value.trim().length > 8)) {
+                alert('password must be greather than 8 characters')
+            }
+
+            else if (usersData.find((userObj, i) => { return userObj.email === email.value.trim() })) {
+                alert('user already exists')
+            } else if (terms.checked !== true) {
+                alert('please agree to terms and conditions')
+            }
+            else {
+                alert('account sign up successful')
+                let userObj = {
+                    username: username.value.trim(),
+                    email: email.value.trim(),
+                    password: password.value.trim()
+                }
+
+                usersData.push(userObj)
+                localStorage.setItem('userInfo', JSON.stringify(usersData))
+                window.location.href = 'login.html'
+                console.log(usersData);
+            }
+
+            button.innerHTML = 'Sign up'
+            button.disabled = false
+        }, 3000)
+
+    }
+
+
+</script>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+
+    // var dghb = undefined
+    generateColors('rgb', 400)
+
+    // var dghb = 400
+
+    function generateColors(colorType, colorAmount) {
+        let arr = []
+
+        if (typeof colorAmount !== "number") {
+            return "color amount must be a number"
+        }
+
+        if (colorType.toLowerCase() === 'rgb') {
+            if (colorAmount > 0) {
+                for (let index = 0; index < colorAmount; index++) {
+                    function giveMeNum() {
+                        return Math.floor(Math.random() * 256)
+                    }
+
+                    arr.push(`rgb(${giveMeNum()},${giveMeNum()},${giveMeNum()})`)
+
+                }
+            }
+        } else if (colorType.toLowerCase() === 'hexa') {
+            if (colorAmount > 0) {
+                for (let index = 0; index < colorAmount; index++) {
+
+                    function generateHexa() {
+                        let hexa = '#'
+                        let myHexaArr = ['a', 'b', 'c', 'd', 'e', 'f']
+                        let numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+                        let finalValues = myHexaArr.concat(numbers)
+
+
+                        for (let index = 0; index < 6; index++) {
+                            let myPicker = Math.floor(Math.random() * finalValues.length)
+                            hexa += finalValues[myPicker]
+                        }
+
+                        return hexa
+                    }
+
+
+                    arr.push(`${generateHexa()}`)
+
+                }
+            }
+
+
+
+        }
+
+        else {
+            return 'we do not have this color type'
+        }
+
+
+        return arr
+
+    }
+
+
+
+    console.log(generateColors('rgb', '20'));
+    console.log(generateColors('hexa', 20));
+    console.log(generateColors('', 20));
+    console.log(generateColors('RGB', 0));
+    console.log(generateColors('', 20));
+
+
+
+    // wow()
+    // console.log(myname);
+    let hello = '793'
+
+    var wow = () => {
+        let myname = 30
+        console.log(myname, hello);
+        return function yeh(params) {
+
+            let jump = '40'
+            console.log(myname, jump);
+            return function hmm(params) {
+                let him = 300
+                console.log(him, myname, jump);
+            }
+        }
+
+    }
+
+
+    wow()()
+
+
+
+</script>

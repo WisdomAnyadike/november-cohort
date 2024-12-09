@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div>
+        <label for="email"> email </label>
+        <input type="text" id="email">
+    </div>
+    <div>
+        <label for="password"> password </label>
+        <input type="text" id="password">
+    </div>
+
+
+    <button id="button" onclick="login()"> Login </button>
+
+</body>
+
+</html>
+<script>
+    let usersData = JSON.parse(localStorage.getItem('userInfo'))
+
+    function login() {
+        button.innerHTML = 'loading..'
+        button.disabled = true
+
+        setTimeout(() => {
+            if (!email.value.trim() || !password.value.trim()) {
+                alert('all fields are mandatory')
+            }
+
+            let user = usersData.find((userObj, i) => { return userObj.email === email.value.trim() })
+
+            let userIndex = usersData.findIndex((userObj, i) => { return userObj.email === email.value.trim() })
+
+            if (!user) {
+                alert('user does not exist , try signing up!')
+                window.location.href = 'signup.html'
+
+            } else {
+                if (user.password !== password.value.trim()) {
+                    alert('invalid email or password')
+                } else {
+                    alert('login successful')
+                    window.location.href = 'dashboard.html'
+                    localStorage.setItem('currentUserIndex' , userIndex)
+
+                }
+            }
+
+
+            button.innerHTML = 'Login'
+        button.disabled = false
+
+        }, 3000);
+
+       
+
+
+    }
+</script>

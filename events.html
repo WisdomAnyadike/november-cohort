@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+
+<body>
+
+    <select name="" id="selecter" class="hey">
+        <option value="1"> choose </option>
+        <option value="2"> rice </option>
+        <option value="3"> beans </option>
+        <option value="4"> okro </option>
+        <option value="5"> amala </option>
+        <option value="6"> puff puff </option>
+    </select>
+
+    <button ondblclick="hmm()"> post </button>
+
+
+    <input type="text" id="input2">
+
+</body>
+
+</html>
+<script>
+    let selectTag = document.getElementById('selecter')
+
+    selectTag.addEventListener('change', (i) => {
+        console.log(i);
+    })
+
+    selectTag.addEventListener('mouseover', (i) => {
+        alert('wowwwwww')
+    })
+
+    function picker(ev) {
+        console.log(ev);
+        console.log(selectTag.value);
+        console.log(ev.target.children);
+        console.log(ev.srcElement);
+        ev.target.nextElementSibling.style.backgroundColor = 'purple'
+    }
+
+    function post(params) {
+        console.log(selectTag.value);
+        if (selectTag.value == 1) {
+            alert('please pick a value')
+            return
+        }
+
+
+        alert('thanks for posting')
+    }
+
+
+    function run() {
+        selectTag.style.color = 'red'
+    }
+
+    function doSmth(params) {
+        selectTag.style.color = 'blue'
+    }
+
+
+    function hmm(params) {
+        alert('stop clicking twice')
+    }
+
+    let input = document.querySelector('#input2')
+
+    input.addEventListener('keydown', runThis)
+
+
+    function runThis(e) {
+        console.log(e.target.value);
+    }
+
+    // let index = 10
+    // let myDecreaser = setInterval(() => {
+    //     index--
+    //     console.log(index);
+
+    //     if (index === 0) {
+    //         clearInterval(myDecreaser)
+    //     }
+
+    // }, 1000)
+
+    // setTimeout(() => {
+    //     console.log('i got here in 10secs');
+    // }, 10000)
+
+
+    // rgb(255 ,255 ,255)
+
+    `rgb(0-255 , 0-255 , 0-255)`
+
+    function generateRandomRgbColor() {
+        function giveMeNum() {
+            return Math.floor(Math.random() * 256)
+        }
+        return (`rgb(${giveMeNum()},${giveMeNum()},${giveMeNum()})`)
+    }
+
+    console.log(generateRandomRgbColor());
+
+    setInterval(() => {
+        document.body.style.backgroundColor = generateRandomRgbColor()
+    }, 1000);
+
+    
+
+</script>
