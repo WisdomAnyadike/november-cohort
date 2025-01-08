@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://www.gstatic.com/firebasejs/11.1.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.1.0/firebase-auth-compat.js"></script>
+</head>
+
+<body>
+    welcome
+</body>
+
+</html>
+<script>
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyB3ad1uYjMXEoKJGVO4RWRdp0zOp_7sMNU",
+        authDomain: "codexplore-e81b0.firebaseapp.com",
+        projectId: "codexplore-e81b0",
+        storageBucket: "codexplore-e81b0.firebasestorage.app",
+        messagingSenderId: "651397229372",
+        appId: "1:651397229372:web:8dc3415327df4f82c44c39"
+    };
+
+    // Initialize Firebase
+    const app = firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    function checkUser(params) {
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                // User is signed in, see docs for a list of available properties
+                // https://firebase.google.com/docs/reference/js/v8/firebase.User
+                var uid = user.uid;
+                console.log(user);
+                // ...
+            } else {
+                // User is signed out
+                // ...
+            }
+        });
+    }
+
+    checkUser()
+
+</script>

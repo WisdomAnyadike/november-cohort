@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://www.gstatic.com/firebasejs/11.1.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.1.0/firebase-auth-compat.js"></script>
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+    <form action="#" method="post">
+        <h2> Login </h2>
+
+        <p>
+            <label for="Email" class="floatLabel">Email</label>
+            <input id="Email" name="Email" type="text">
+        </p>
+        <p>
+            <label for="password" class="floatLabel">Password</label>
+            <input id="password" name="password" type="password">
+        </p>
+
+        <p>
+            <input type="submit" onclick="sumbitForm(event)" value="Login To Account" id="submit">
+        </p>
+    </form>
+
+</body>
+
+</html>
+<script>
+    const firebaseConfig = {
+        apiKey: "AIzaSyB3ad1uYjMXEoKJGVO4RWRdp0zOp_7sMNU",
+        authDomain: "codexplore-e81b0.firebaseapp.com",
+        projectId: "codexplore-e81b0",
+        storageBucket: "codexplore-e81b0.firebasestorage.app",
+        messagingSenderId: "651397229372",
+        appId: "1:651397229372:web:8dc3415327df4f82c44c39"
+    };
+
+    // Initialize Firebase
+    const app = firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    function sumbitForm(e) {
+        e.preventDefault()
+        let email = document.getElementById('Email').value.trim()
+        let password = document.getElementById('password').value.trim()
+
+        if (!email || !password) {
+            alert('all fields are mandatory')
+            return
+        }
+
+        auth.signInWithEmailAndPassword(email, password)
+            .then((userCredential) => {
+                // Signed in
+                var user = userCredential.user;
+                alert('login successful')
+                window.location.href = 'dashboard.html'
+                // ...
+            })
+            .catch((error) => {
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                alert(errorMessage)
+            });
+
+    }
+
+
+
+</script>
