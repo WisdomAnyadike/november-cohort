@@ -74,26 +74,26 @@ body {
     color: red;
   }
   
-  form input[type="submit"] {
+  /* form #submit {
     background: rgba(148, 186, 101, 0.7);
     box-shadow: 0 3px 0 0 rgba(121, 152, 83, 1); /* Equivalent to darken($button, 10%) */
-    border-radius: 2px;
+    /* border-radius: 2px;
     border: none;
     color: #fff;
     cursor: pointer;
     display: block;
     font-size: 2em;
     line-height: 1.6em;
-    margin: 2em 0 0;
+    margin: 2em auto;
     outline: none;
-    padding: 0.8em 0;
-    text-shadow: 0 1px #68B25B;
-  }
+    padding: 20px 40px;
+    text-shadow: 0 1px #68B25B; */
+  /* } */ */
   
-  form input[type="submit"]:hover {
+  /* form #submit:hover {
     background: rgba(148, 175, 101, 1);
     text-shadow: 0 1px 3px rgba(102, 128, 71, 1); /* Equivalent to darken($button, 30%) */
-  }
+  /* } */ */
   
   form label {
     position: absolute;

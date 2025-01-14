@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://www.gstatic.com/firebasejs/11.1.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.1.0/firebase-auth-compat.js"></script>
+</head>
+
+<body>
+
+    <img id="img" width="100px" height="100px" alt="">
+    <input id="input" type="file" onchange="pickAPicture(event)">
+
+    <div>
+        <input type="text" id="input1"> <button onclick="updateUsername()"> update username</button>
+    </div>
+    <div>
+        <input type="text" id="input2">
+    </div>
+    <div>
+
+        <input type="text" id="input3"> <button onclick="updatePassword()"> update password </button>
+    </div>
+
+
+</body>
+
+</html>
+<script>
+    const firebaseConfig = {
+        apiKey: "AIzaSyB3ad1uYjMXEoKJGVO4RWRdp0zOp_7sMNU",
+        authDomain: "codexplore-e81b0.firebaseapp.com",
+        projectId: "codexplore-e81b0",
+        storageBucket: "codexplore-e81b0.firebasestorage.app",
+        messagingSenderId: "651397229372",
+        appId: "1:651397229372:web:8dc3415327df4f82c44c39"
+    };
+
+    // Initialize Firebase
+    const app = firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    function checkUser(params) {
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+
+                var uid = user.uid;
+                input1.value = user.displayName
+                input2.value = user.email
+                img.src = user.photoURL || 'https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg'
+                console.log(user);
+                // ...
+            } else {
+                window.location.href = 'login.html'
+                // User is signed out
+                // ...
+            }
+        });
+    }
+
+    checkUser()
+
+
+    function pickAPicture(e) {
+        // let file = e.target.files
+        let file = document.getElementById('input').files[0]
+        console.log(file);
+
+        let myUrl = URL.createObjectURL(file)
+
+        console.log(myUrl);
+        // let reader = new FileReader()
+
+        // if (file) {
+        //     reader.readAsDataURL(file)
+        // }
+
+        // reader.addEventListener('load', (e) => {
+        //     let url = e.target.result
+        //     console.log(url);
+
+
+        // })
+
+
+        const user = auth.currentUser;
+        user.updateProfile({
+            photoURL: myUrl.slice(5, myUrl.length - 1)
+        }).then(() => {
+            img.src = myUrl
+            alert('profile pic updated successfully')
+
+            // Update successful
+            // ...
+        }).catch((error) => {
+            alert(error)
+            // An error occurred
+            // ...
+        });
+
+
+    }
+
+
+
+    function updateUsername() {
+        if (!input1.value.trim()) {
+            alert('input field is mandatory')
+            return
+        }
+
+        const user = auth.currentUser;
+        user.updateProfile({
+            displayName: input1.value.trim()
+        }).then(() => {
+            checkUser()
+            alert('username updated successfully')
+            // Update successful
+            // ...
+        }).catch((error) => {
+            alert(error)
+            // An error occurred
+            // ...
+        });
+    }
+
+
+    function updatePassword(params) {
+        if (!input3.value.trim()) {
+            alert('new password is mandatory')
+            return
+        }
+
+        const user = auth.currentUser;
+        const newPassword = input3.value.trim();
+
+        user.updatePassword(newPassword).then(() => {
+            // Update successful.
+            console.log('here');
+            alert('password changed successfully')
+            input3.value = ''
+        }).catch((error) => {
+            alert(error)
+            // An error ocurred
+            // ...
+        });
+
+
+    }
+</script>

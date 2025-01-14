@@ -8,10 +8,24 @@
   <link rel="stylesheet" href="index.css">
   <script src="https://www.gstatic.com/firebasejs/11.1.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/11.1.0/firebase-auth-compat.js"></script>
+  <style>
+    #notification {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 200px;
+      height: 150px;
+      box-shadow: 2px 2px rgba(0, 0, 0, 0.289);
+      border: 1px solid black;
+    }
+  </style>
 
 </head>
 
 <body>
+  <div id="notification">
+
+  </div>
   <form action="#" method="post">
     <h2>Sign Up</h2>
     <p>
@@ -33,8 +47,12 @@
       <span>Your passwords do not match</span>
     </p>
     <p>
-      <input type="submit" onclick="sumbitForm(event)" value="Create My Account" id="submit">
+      <button onclick="sumbitForm(event)" id="submit"> Create an Account </button>
     </p>
+    <p>
+      <button type="button" onclick="signInWithGoogle()"> Sign in with Google </button>
+    </p>
+
     <p style="display: flex; align-items: center; justify-content: center;"> <a href="login.html"> or login here</a>
     </p>
 
@@ -60,20 +78,38 @@
   // Initialize Firebase
   const app = firebase.initializeApp(firebaseConfig);
   const auth = firebase.auth();
+  var provider = new firebase.auth.GoogleAuthProvider();
 
   function sumbitForm(e) {
+    e.target.innerHTML = 'loading...'
+    e.target.disabled = true
+
     e.preventDefault()
+
+
     let password = document.getElementById('password').value.trim()
     let confirmPassword = document.getElementById('confirm_password').value.trim()
     let email = document.getElementById('Email').value.trim()
     let username = document.getElementById('Username').value.trim()
+
+
     if (!email || !password || !confirmPassword || !username) {
-      alert('all fields are mandatory')
+      notification.innerHTML = 'all fields are mandatory'
+      setTimeout(() => {
+        notification.innerHTML = ''
+      }, 2000);
+      e.target.innerHTML = 'Create an Account'
+      e.target.disabled = false
       return
     }
 
     if (password !== confirmPassword) {
-      alert('password does not match')
+      notification.innerHTML = 'password does not match'
+      setTimeout(() => {
+        notification.innerHTML = ''
+      }, 2000);
+      e.target.innerHTML = 'Create an Account'
+      e.target.disabled = false
       return
     }
 
@@ -83,22 +119,68 @@
         // Signed in 
         var user = userCredential.user;
         user.updateProfile({
-          displayName: username ,
+          displayName: username,
         }).then(() => {
         }).catch((error) => {
           alert('couldnt update username , do that in profile settings')
         });
 
-        alert('sign up successful')
+        notification.innerHTML = 'sign up successful'
+        setTimeout(() => {
+          notification.innerHTML = ''
+          window.location.href = 'login.html'
+        }, 2000);
+        e.target.innerHTML = 'Create an Account'
+        e.target.disabled = false
       })
       .catch((error) => {
         var errorCode = error.code;
         var errorMessage = error.message;
 
-        alert(errorMessage)
+        notification.innerHTML = errorMessage
+        setTimeout(() => {
+          notification.innerHTML = ''
+        }, 2000);
+        e.target.innerHTML = 'Create an Account'
+        e.target.disabled = false
 
         // ..
       });
+
+
+
+
+
+
+
+  }
+
+  function signInWithGoogle() {
+    firebase.auth()
+      .signInWithPopup(provider)
+      .then((result) => {
+        /** @type {firebase.auth.OAuthCredential} */
+        var credential = result.credential;
+
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        var token = credential.accessToken;
+        // The signed-in user info.
+        var user = result.user;
+        window.location.href = 'dashboard.html'
+        // IdP data available in result.additionalUserInfo.profile.
+        // ...
+      }).catch((error) => {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        alert(errorMessage)
+        // The email of the user's account used.
+        var email = error.email;
+        // The firebase.auth.AuthCredential type that was used.
+        var credential = error.credential;
+        // ...
+      });
+
   }
 
 </script>

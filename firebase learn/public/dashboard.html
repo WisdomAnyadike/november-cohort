@@ -7,10 +7,54 @@
     <title>Document</title>
     <script src="https://www.gstatic.com/firebasejs/11.1.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/11.1.0/firebase-auth-compat.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #navbar {
+            width: 100%;
+            height: 70px;
+            background-color: red;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        #img {
+            border-radius: 50%;
+        }
+
+        #welcomer,
+        #others {
+            width: 18%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+        }
+    </style>
 </head>
 
 <body>
-    welcome
+    <div id="navbar">
+        <div id="welcomer">
+            <p> welcome <span id="usersName"> </span> </p>
+
+            <img id="img" width="50px" height="50px" alt="profilePic">
+        </div>
+
+        <div id="others">
+            <button onclick="profilePage()"> profile </button>
+            <button onclick="logUserOut()"> logOut </button>
+        </div>
+
+
+
+    </div>
+
 </body>
 
 </html>
@@ -32,12 +76,14 @@
     function checkUser(params) {
         auth.onAuthStateChanged((user) => {
             if (user) {
-                // User is signed in, see docs for a list of available properties
-                // https://firebase.google.com/docs/reference/js/v8/firebase.User
+
                 var uid = user.uid;
+                usersName.innerHTML = user.displayName
+                img.src = user.photoURL || 'https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg'
                 console.log(user);
                 // ...
             } else {
+                window.location.href = 'login.html'
                 // User is signed out
                 // ...
             }
@@ -46,4 +92,18 @@
 
     checkUser()
 
+    function logUserOut() {
+        auth.signOut().then(() => {
+            alert('logout success')
+            setTimeout(() => {
+                window.location.href = 'login.html'
+            }, 1000);
+        }).catch((error) => {
+            alert('an error occured, try again')
+        });
+    }
+
+    function profilePage(params) {
+        window.location.href = 'profile.html'
+    }
 </script>

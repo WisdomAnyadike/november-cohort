@@ -24,7 +24,7 @@
         </p>
 
         <p>
-            <input type="submit" onclick="sumbitForm(event)" value="Login To Account" id="submit">
+            <button  onclick="sumbitForm(event)"> Login To Account </button>
         </p>
     </form>
 
@@ -46,12 +46,16 @@
     const auth = firebase.auth();
 
     function sumbitForm(e) {
+        e.target.innerHTML = 'loading...'
+        e.target.disabled = true
         e.preventDefault()
         let email = document.getElementById('Email').value.trim()
         let password = document.getElementById('password').value.trim()
 
         if (!email || !password) {
             alert('all fields are mandatory')
+            e.target.innerHTML = 'Login To Account'
+            e.target.disabled = false
             return
         }
 
@@ -60,13 +64,18 @@
                 // Signed in
                 var user = userCredential.user;
                 alert('login successful')
+
                 window.location.href = 'dashboard.html'
+                e.target.innerHTML = 'Login To Account'
+                e.target.disabled = false
                 // ...
             })
             .catch((error) => {
                 var errorCode = error.code;
                 var errorMessage = error.message;
                 alert(errorMessage)
+                e.target.innerHTML = 'Login To Account'
+                e.target.disabled = false
             });
 
     }
