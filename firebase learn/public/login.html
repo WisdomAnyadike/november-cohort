@@ -24,7 +24,7 @@
         </p>
 
         <p>
-            <button  onclick="sumbitForm(event)"> Login To Account </button>
+            <button onclick="sumbitForm(event)"> Login To Account </button>
         </p>
     </form>
 
@@ -63,9 +63,19 @@
             .then((userCredential) => {
                 // Signed in
                 var user = userCredential.user;
-                alert('login successful')
+                if (!user.emailVerified) {
+                    auth.currentUser.sendEmailVerification()
+                        .then(() => {
+                            alert('we sent a verification mail , Please verify email to login')
+                        }).catch((err) => {
+                            alert(err)
+                        });
+                } else {
+                    alert('login successful')
+                    window.location.href = 'dashboard.html'
+                }
 
-                window.location.href = 'dashboard.html'
+
                 e.target.innerHTML = 'Login To Account'
                 e.target.disabled = false
                 // ...

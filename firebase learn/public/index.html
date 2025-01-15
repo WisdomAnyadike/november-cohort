@@ -121,15 +121,25 @@
         user.updateProfile({
           displayName: username,
         }).then(() => {
+          auth.currentUser.sendEmailVerification()
+            .then(() => {
+            }).catch((err) => {
+              alert(err)
+            });
         }).catch((error) => {
           alert('couldnt update username , do that in profile settings')
         });
+
+
 
         notification.innerHTML = 'sign up successful'
         setTimeout(() => {
           notification.innerHTML = ''
           window.location.href = 'login.html'
         }, 2000);
+
+
+
         e.target.innerHTML = 'Create an Account'
         e.target.disabled = false
       })

@@ -7,6 +7,8 @@
     <title>Document</title>
     <script src="https://www.gstatic.com/firebasejs/11.1.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/11.1.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.1.0/firebase-database-compat.js"></script>
+    <link rel="stylesheet" href="dashboard.css">
     <style>
         * {
             margin: 0;
@@ -55,6 +57,42 @@
 
     </div>
 
+
+
+    <div class="main-container">
+        <div class="head-container">
+            <h1>• Javascript Group Chat </h1>
+            <a href="#" class="btn"><img src="https://svgshare.com/i/Knn.svg" alt="close" class="delete" /></a>
+        </div>
+
+        <div class="message-container" id="messages">
+
+
+            <!-- <div class="received">
+                <h5 class="hour">10:57</h5>
+                <p class="received-bubble">
+                    Yo! Send it to my assistant and we'll review it during the year.
+                </p>
+            </div>
+            <div class="sent">
+                <h5 class="hour">11:03</h5>
+                <p class="sent-bubble">But Mark...</p>
+            </div>
+            <div class="blocked">
+                <h5 class="hour">11:05</h5>
+                <p class="blocked-bubble">You were blocked by the user</p>
+            </div> -->
+
+
+        </div>
+
+        <div class="input-container">
+            <input type="text" id="myInput" placeholder="Enter your message" />
+            <a href="#" class="btn" onclick="sendMessage()"> Send </a>
+        </div>
+    </div>
+
+
 </body>
 
 </html>
@@ -63,6 +101,7 @@
     const firebaseConfig = {
         apiKey: "AIzaSyB3ad1uYjMXEoKJGVO4RWRdp0zOp_7sMNU",
         authDomain: "codexplore-e81b0.firebaseapp.com",
+        databaseURL: "https://codexplore-e81b0-default-rtdb.firebaseio.com",
         projectId: "codexplore-e81b0",
         storageBucket: "codexplore-e81b0.firebasestorage.app",
         messagingSenderId: "651397229372",
@@ -72,10 +111,15 @@
     // Initialize Firebase
     const app = firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
+    // Initialize Realtime Database and get a reference to the service
+    const database = firebase.database()
+    let index
+
 
     function checkUser(params) {
         auth.onAuthStateChanged((user) => {
-            if (user) {
+            if (user && user.emailVerified) {
+
 
                 var uid = user.uid;
                 usersName.innerHTML = user.displayName
@@ -106,4 +150,50 @@
     function profilePage(params) {
         window.location.href = 'profile.html'
     }
+
+    function sendMessage() {
+        if (!myInput.value.trim()) {
+            alert('input is mandatory')
+        } else {
+            firebase.database().ref(`chats/${index}`).set({
+                sender: auth.currentUser.displayName,
+                message: myInput.value.trim(),
+                time: new Date().toLocaleTimeString(),
+            }).then(() => {
+            }).catch((err) => {
+                alert(err)
+            });
+
+        }
+
+    }
+
+    function displayMessages() {
+        var starCountRef = firebase.database().ref('chats');
+
+        starCountRef.on('value', (snapshot) => {
+
+            const data = snapshot.val() || [];
+            console.log(data);
+            index = data.length
+            messages.innerHTML = ''
+            data.forEach((obj, i, arr) => {
+              
+                let designClass = auth.currentUser.displayName === obj.sender ? 'recieved' : 'sent'
+
+                messages.innerHTML += `<div class="${designClass}" >
+                    <b style="font-weight: 600; "> ${obj.sender}</b>
+                <h5 class="hour">${obj.time}</h5>
+               
+                <p class="sent-bubble">${obj.message}</p>
+            </div>`
+            });
+            console.log(data);
+
+        });
+    }
+
+
+    displayMessages()
+
 </script>
