@@ -150,13 +150,13 @@ body {
   background-color: var(--received-color);
 }
 
-.blocked-bubble {
+.blocked-bubble , .blocked {
   background-color: var(--blocked-color);
 }
 
 .sent-bubble,
 .received-bubble,
-.blocked-bubble {
+.blocked-bubble , .blocked {
   max-width: 70%;
   padding: 10px;
   margin: 10px 0 20px;
@@ -175,7 +175,7 @@ body {
   border-top-left-radius: 3px;
 }
 
-.blocked-bubble {
+.blocked-bubble ,.blocked {
   border-radius: 3px;
 }
 

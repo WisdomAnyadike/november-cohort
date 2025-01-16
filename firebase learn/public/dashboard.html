@@ -59,7 +59,7 @@
 
 
 
-    <div class="main-container">
+    <div class="main-container" id="container">
         <div class="head-container">
             <h1>• Javascript Group Chat </h1>
             <a href="#" class="btn"><img src="https://svgshare.com/i/Knn.svg" alt="close" class="delete" /></a>
@@ -160,6 +160,7 @@
                 message: myInput.value.trim(),
                 time: new Date().toLocaleTimeString(),
             }).then(() => {
+                myInput.value = ''
             }).catch((err) => {
                 alert(err)
             });
@@ -169,6 +170,8 @@
     }
 
     function displayMessages() {
+        messages.innerHTML = 'GROUP CHAT...'
+
         var starCountRef = firebase.database().ref('chats');
 
         starCountRef.on('value', (snapshot) => {
@@ -177,16 +180,35 @@
             console.log(data);
             index = data.length
             messages.innerHTML = ''
+
             data.forEach((obj, i, arr) => {
-              
+
                 let designClass = auth.currentUser.displayName === obj.sender ? 'recieved' : 'sent'
+
+                let deleteButton = auth.currentUser.displayName === obj.sender ? `<button class="blocked" onclick="deleteMssg(${i})"> delete </button>` : ''
+
+
+                let chatMessage
+
+                if (obj.message === `<i> you deleted a message </i>`) {
+
+                    if (auth.currentUser.displayName === obj.sender) {
+                        chatMessage = `<p class="sent-bubble">${obj.message} </p> `
+                    } else {
+                        chatMessage = `<p class="sent-bubble">${obj.message.replace('you', `${obj.sender}`)} </p> `
+                    }
+
+                } else {
+                    chatMessage = `<p class="sent-bubble">${obj.message}   ${deleteButton}  </p>`
+                }
 
                 messages.innerHTML += `<div class="${designClass}" >
                     <b style="font-weight: 600; "> ${obj.sender}</b>
                 <h5 class="hour">${obj.time}</h5>
                
-                <p class="sent-bubble">${obj.message}</p>
-            </div>`
+               ${chatMessage}
+               </div>
+            `
             });
             console.log(data);
 
@@ -196,4 +218,17 @@
 
     displayMessages()
 
+
+    function deleteMssg(index) {
+        let confirmDelete = confirm('are you sure you want to delete?')
+        if (confirmDelete) {
+            firebase.database().ref(`chats/${index}`).update({
+                message: '<i> you deleted a message </i>'
+            }).then(() => {
+            }).catch((err) => {
+                alert(err)
+            })
+        }
+
+    }
 </script>
