@@ -86,8 +86,9 @@
 
         </div>
 
-        <div class="input-container">
-            <input type="text" id="myInput" placeholder="Enter your message" />
+        <div class="input-container" >
+            <input type="text" onkeypress="sendMssg(event)" id="myInput" oninput="editInput()"
+                placeholder="Enter your message" />
             <a href="#" class="btn" onclick="sendMessage()"> Send </a>
         </div>
     </div>
@@ -155,18 +156,36 @@
         if (!myInput.value.trim()) {
             alert('input is mandatory')
         } else {
-            firebase.database().ref(`chats/${index}`).set({
-                sender: auth.currentUser.displayName,
-                message: myInput.value.trim(),
-                time: new Date().toLocaleTimeString(),
-            }).then(() => {
-                myInput.value = ''
-            }).catch((err) => {
-                alert(err)
-            });
+            if (!index) {
+                alert('sorry , couldnt send mssg at the moment')
+            } else {
+                firebase.database().ref(`chats/${index}`).set({
+                    sender: auth.currentUser.displayName,
+                    message: myInput.value.trim(),
+                    time: new Date().toLocaleTimeString(),
+                }).then(() => {
+                    myInput.value = ''
+                }).catch((err) => {
+                    alert(err)
+                });
+            }
 
         }
 
+    }
+
+    function sendMssg(e) {
+        if (e.code === 'Enter') {
+            sendMessage()
+        }
+    }
+
+    // myname.value = div.innerHTML
+    //div.innerHTML = name.value
+
+
+    function editInput() {
+        myInput.value = myInput.value.trim() ? myInput.value.replace(myInput.value[0], myInput.value[0].toUpperCase()) : ''
     }
 
     function displayMessages() {
@@ -181,30 +200,30 @@
             index = data.length
             messages.innerHTML = ''
 
-            data.forEach((obj, i, arr) => {
+            data.forEach(({ sender, message, time }, i, arr) => {
 
-                let designClass = auth.currentUser.displayName === obj.sender ? 'recieved' : 'sent'
+                let designClass = auth.currentUser.displayName === sender ? 'recieved' : 'sent'
 
-                let deleteButton = auth.currentUser.displayName === obj.sender ? `<button class="blocked" onclick="deleteMssg(${i})"> delete </button>` : ''
+                let deleteButton = auth.currentUser.displayName === sender ? `<button class="blocked" onclick="deleteMssg(${i})"> delete </button>   <button class="blocked" onclick="editMssg(${i} , '${message}')"> edit </button>` : ''
 
 
                 let chatMessage
 
-                if (obj.message === `<i> you deleted a message </i>`) {
+                if (message === `<i> you deleted a message </i>`) {
 
-                    if (auth.currentUser.displayName === obj.sender) {
-                        chatMessage = `<p class="sent-bubble">${obj.message} </p> `
+                    if (auth.currentUser.displayName === sender) {
+                        chatMessage = `<p ondblclick="removeMssg(${i})" class="sent-bubble">${message} </p> `
                     } else {
-                        chatMessage = `<p class="sent-bubble">${obj.message.replace('you', `${obj.sender}`)} </p> `
+                        chatMessage = `<p class="sent-bubble">${message.replace('you', `${sender}`)} </p> `
                     }
 
                 } else {
-                    chatMessage = `<p class="sent-bubble">${obj.message}   ${deleteButton}  </p>`
+                    chatMessage = `<p class="sent-bubble">${message}   ${deleteButton}  </p>`
                 }
 
                 messages.innerHTML += `<div class="${designClass}" >
-                    <b style="font-weight: 600; "> ${obj.sender}</b>
-                <h5 class="hour">${obj.time}</h5>
+                    <b style="font-weight: 600; "> ${sender}</b>
+                <h5 class="hour">${time}</h5>
                
                ${chatMessage}
                </div>
@@ -219,16 +238,41 @@
     displayMessages()
 
 
-    function deleteMssg(index) {
+    function deleteMssg(i) {
         let confirmDelete = confirm('are you sure you want to delete?')
         if (confirmDelete) {
-            firebase.database().ref(`chats/${index}`).update({
-                message: '<i> you deleted a message </i>'
+            firebase.database().ref(`chats/${i}`).update({
+                message: `<i> you deleted a message </i>`
             }).then(() => {
             }).catch((err) => {
                 alert(err)
             })
         }
 
+    }
+
+
+    function editMssg(i, mssg) {
+        let myPrompt = prompt('Enter your new message', mssg)
+        console.log(myPrompt);
+        if (myPrompt.trim() === '') {
+            alert('input is mandatory')
+        } else if (myPrompt.trim() === mssg) {
+            alert('cant edit with the same value')
+        } else {
+            firebase.database().ref(`chats/${i}`).update({
+                message: myPrompt
+            }).then(() => {
+            }).catch((err) => {
+                alert(err)
+            })
+        }
+    }
+
+    function removeMssg(i) {
+        console.log('hmm');
+        firebase.database().ref(`chats/${i}`).remove().then().catch((err) => {
+            alert(err)
+        })
     }
 </script>
