@@ -210,9 +210,16 @@
     fetchProducts()
 
 
-    function seeMore(i) {
-         fetch(`https://dummyjson.com/products/${i}`)
-    }
+    async function seeMore(i) {
+           const res = await fetch(`https://dummyjson.com/products/${i}`)
+           const data = await res.json()
+        }
+
+    // function seeMore(i) {
+    //      fetch(`https://dummyjson.com/products/${i}`)
+
+       
+    // }
 
 
 

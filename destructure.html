@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+
+    let numbers = [1, 2, 3, 4, 5]
+    let [two, one, three, four, five] = numbers
+    console.log(two);
+
+    const fullStack = [
+        ['HTML', 'CSS', 'JS', 'React'],
+        ['Node', 'Express', 'MongoDB']
+    ]
+
+    // let [frontEnd, BackEnd] = fullStack
+
+    // let [first, second, third, forth] = frontEnd
+    // let [oneVal, twoVal, threeVal] = BackEnd
+
+    // console.log(frontEnd);
+
+
+    let [[first, , , forth] = frontEnd, [oneVal, twoVal, threeVal] = BackEnd] = fullStack
+
+    console.log(first, forth, oneVal);
+
+
+    const names = [undefined, 'Brook', 'David']
+    console.log(...names);
+
+    let [
+        firstPerson = 'asabeneh',
+        secondPerson,
+        thirdPerson,
+        forthPerson = 'john',
+        fifthPerson
+    ] = names
+
+    console.log(firstPerson, secondPerson, thirdPerson, forthPerson)
+    console.log(names);
+
+
+    // function jump(p = 1, h = 4) {
+    //     console.log(p, h);
+    // }
+
+    // jump(undefined, undefined)
+
+    let nums = [1, 234, 5, 6, 7, 8, 3, 9, 4, 0, 99]
+    let [, myNumber, ...otherNums] = nums
+    console.log(myNumber);
+    console.log(otherNums);
+
+
+    console.log(Math.min(...nums));
+
+
+    const countries = [['Finland', 'Helsinki', 'naija'], ['Sweden', 'Stockholm'], ['Norway', 'Oslo']]
+
+    // let val  = true
+    // countries.forEach((subarr, i, mainArr) => {
+    //     while (val) {
+    //         console.log(subarr[0]);
+    //         val = false
+    //         break
+    //     }
+    // })
+
+
+    countries.forEach(([one, two, three = 'hmm'], i, mainArr) => {
+        console.log(one, two, three);
+    })
+
+
+
+    for (let index = 0; index < 5; index++) {
+        console.log(index);
+        break
+
+    }
+
+    let myMembers = [['damodotun', 'badman'], ['timi', 'ridwan']]
+    for (const [name1, name2] of myMembers) {
+        console.log(name1, name2);
+    }
+
+
+    const rectangle = {
+        width: 20,
+        height: 10,
+        area: 200
+    }
+
+
+    let { area: y, width: z, height: x } = rectangle
+    console.log(y, z, x);
+
+
+    // Without destructuring
+    const rect = {
+        width: 20,
+        height: 10
+    }
+    function calculatePerimeter({ width, height }) {
+        return 2 * (width + height)
+    }
+
+    console.log(calculatePerimeter(rect)) // 60
+
+
+
+
+
+
+    const todoList = [
+        {
+            task: 'Prepare JS Test',
+            time: '4/1/2020 8:30',
+            completed: true
+        },
+        {
+            task: 'Give JS Test',
+            time: '4/1/2020 10:00',
+            completed: false
+        },
+        {
+            task: 'Assess Test Result',
+            time: '4/1/2020 1:00',
+            completed: false
+        }
+    ]
+
+
+    todoList.forEach(({ task, completed, time }) => {
+        console.log(task, time, completed);
+    })
+
+    let numbers1 = [1, 2, 3, 4, 5]
+    let numbers2 = [5, 6, ...numbers1, 7, 8]
+    console.log(numbers2);
+
+
+    const rect1 = {
+        width: 20,
+        height: 10,
+        shape: 'square'
+    }
+
+    // let { width, height, shape = 'circle' } = rect1
+
+
+    const rect2 = { ...rect1, shape: 'circle', area: 6783 }
+    console.log(rect2);
+
+    function add() {
+        let sum = 0
+        for (let index = 0; index < arguments.length; index++) {
+            sum = sum + arguments[index]
+        }
+
+        return sum
+    }
+
+    console.log(add(4, 45, 6, 67, 7, 8, 8));
+    console.log(add(7, 8, 8));
+
+    let sumNumber = (...vals) => {
+        return vals.reduce((a, b) => a + b, 0)
+    }
+
+    console.log(sumNumber(1, 244, 56, 6));
+</script>
